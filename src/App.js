@@ -1,24 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter,Routes,Route } from 'react-router-dom';
+import Login from './components/Login'
+import Home from './components/Home';
+import Product from './components/Product';
+import Header from './components/Header';
+import { useSelector } from 'react-redux';
+import Cart from './components/Cart';
+
 
 function App() {
+  const loggedin=useSelector((state)=>state.login.loggedin)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+    <Routes>
+      <Route path='/' element={<Header></Header>}>
+      <Route index element={<Home/>}></Route>
+      <Route path='cart' element={<Cart></Cart>}></Route>
+      <Route path='product/:id' element={<Product></Product>}></Route>
+      </Route>
+      {loggedin?null:<Route path='login' element={<Login></Login>}></Route>}
+    </Routes>
+    </BrowserRouter>
   );
 }
 
